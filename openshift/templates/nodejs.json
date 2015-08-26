@@ -2,7 +2,7 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "nodejs-example",
+    "name": "nodejs-poc",
     "annotations": {
       "description": "An example Node.js application with no database",
       "tags": "instant-app,nodejs",
@@ -10,14 +10,14 @@
     }
   },
   "labels": {
-    "template": "nodejs-example"
+    "template": "nodejs-poc"
   },
   "objects": [
     {
       "kind": "Service",
       "apiVersion": "v1",
       "metadata": {
-        "name": "nodejs-example",
+        "name": "nodejs-poc",
         "annotations": {
           "description": "Exposes and load balances the application pods"
         }
@@ -31,7 +31,7 @@
           }
         ],
         "selector": {
-          "name": "nodejs-example"
+          "name": "nodejs-poc"
         }
       }
     },
@@ -39,13 +39,13 @@
       "kind": "Route",
       "apiVersion": "v1",
       "metadata": {
-        "name": "nodejs-example"
+        "name": "nodejs-poc"
       },
       "spec": {
         "host": "${APPLICATION_DOMAIN}",
         "to": {
           "kind": "Service",
-          "name": "nodejs-example"
+          "name": "nodejs-poc"
         }
       }
     },
@@ -63,7 +63,7 @@
       "kind": "BuildConfig",
       "apiVersion": "v1",
       "metadata": {
-        "name": "nodejs-example",
+        "name": "nodejs-poc",
         "annotations": {
           "description": "Defines how to build the application"
         }
@@ -90,7 +90,7 @@
         "output": {
           "to": {
             "kind": "ImageStreamTag",
-            "name": "nodejs-example:latest"
+            "name": "nodejs-poc:latest"
           }
         },
         "triggers": [
@@ -110,7 +110,7 @@
       "kind": "DeploymentConfig",
       "apiVersion": "v1",
       "metadata": {
-        "name": "nodejs-example",
+        "name": "nodejs-poc",
         "annotations": {
           "description": "Defines how to deploy the application server"
         }
@@ -125,11 +125,11 @@
             "imageChangeParams": {
               "automatic": true,
               "containerNames": [
-                "nodejs-example"
+                "nodejs-poc"
               ],
               "from": {
                 "kind": "ImageStreamTag",
-                "name": "nodejs-example:latest"
+                "name": "nodejs-poc:latest"
               }
             }
           },
@@ -139,20 +139,20 @@
         ],
         "replicas": 1,
         "selector": {
-          "name": "nodejs-example"
+          "name": "nodejs-poc"
         },
         "template": {
           "metadata": {
-            "name": "nodejs-example",
+            "name": "nodejs-poc",
             "labels": {
-              "name": "nodejs-example"
+              "name": "nodejs-poc"
             }
           },
           "spec": {
             "containers": [
               {
-                "name": "nodejs-example",
-                "image": "nodejs-example",
+                "name": "nodejs-poc",
+                "image": "nodejs-poc",
                 "ports": [
                   {
                     "containerPort": 8080
@@ -191,7 +191,7 @@
     {
       "name": "SOURCE_REPOSITORY_URL",
       "description": "The URL of the repository with your application source code",
-      "value": "https://github.com/openshift/nodejs-ex.git"
+      "value": "https://github.com/LewS/nodejs-poc.git"
     },
     {
       "name": "SOURCE_REPOSITORY_REF",
